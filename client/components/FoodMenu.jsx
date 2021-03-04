@@ -34,64 +34,85 @@ class FoodMenu extends Component {
     this.setState({ ...newState });
   }
 
-  submitClicked() {
-    const data = this.state.data;
+  submitClicked(e) {
+    if (Object.keys(this.state.data).length === 0) {
+      window.alert('Please select first!');
+    } else {
+      const data = this.state.data;
+      const foodArray = e.target.getAttribute('foodlist');
+      const bodyData = { data, foodArray };
 
-    // send the data to the backend
-    fetch('/create', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
+      // send the data to the backend
+      fetch('/create', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(bodyData),
       })
-      .catch((err) => {
-        console.log(err);
-      });
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
 
-    this.setState({ data: {} });
+      this.setState({ data: {} });
+    }
   }
 
   render() {
     let buttons = [];
     let foodArray = [
+      'coke',
       'truffle pizza',
       'three mushroom risotto',
       'foie gras',
       'japanese A5 wagyu ribeye steak',
-      'luwak Coffee',
-      'iberico pork chop',
+      'coffee',
+      'jamon iberico',
       'caviar',
-      'pino noir',
-      'coke',
+      'pinot noir',
+      'lobster roll',
     ];
-    foodArray = foodArray.sort();
+    // foodArray = foodArray.sort();
     foodArray.forEach((ele, i) => {
       buttons.push(
-        <button key={i} id={ele} onClick={(e) => this.foodClicked(e)}>
+        <button
+          className='foodButton'
+          key={i}
+          id={ele}
+          onClick={(e) => this.foodClicked(e)}
+        >
           {ele[0].toUpperCase() + ele.slice(1) + ' '}
+          <br></br>
           {this.state.data[ele]}
         </button>
       );
     });
 
     return (
-      <main>
+      <main className='main'>
         <div>
-          <h2>FOOD MENU</h2>
+          <h1>Pick what you ate!</h1>
         </div>
-        <div>{buttons}</div>
+
+        <div className='foodButtons'>{buttons}</div>
         <br></br>
-        <button id='submit' onClick={this.submitClicked}>
-          submit
-        </button>
-        <Link to={'/graph'}>
-          <button>to the graph!</button>
-        </Link>
+        <div className='otherButtons'>
+          <button
+            id='submit'
+            className='otherButton'
+            foodlist={foodArray}
+            onClick={(e) => this.submitClicked(e)}
+          >
+            submit
+          </button>
+          <Link to={'/graph'}>
+            <button className='otherButton'>to the graph!</button>
+          </Link>
+        </div>
       </main>
     );
   }

@@ -3,6 +3,7 @@ import { Switch, Route } from 'react-router-dom';
 
 import FoodMenu from './components/FoodMenu';
 import UserGraph from './components/UserGraph';
+import './styles.css';
 
 class App extends Component {
   constructor(props) {
