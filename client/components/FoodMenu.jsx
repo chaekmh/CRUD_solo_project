@@ -75,6 +75,11 @@ class FoodMenu extends Component {
       'caviar',
       'pinot noir',
       'lobster roll',
+      'omakase',
+      'escargo',
+      'cabernet sauvignon',
+      'dim sum',
+      'singaporean chili crab',
     ];
     // foodArray = foodArray.sort();
     foodArray.forEach((ele, i) => {
