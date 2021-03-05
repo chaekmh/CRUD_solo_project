@@ -115,7 +115,7 @@ class FoodMenu extends Component {
             submit
           </button>
           <Link to={'/graph'}>
-            <button className='otherButton'>to the graph!</button>
+            <button className='otherButton'>preference</button>
           </Link>
         </div>
       </main>
